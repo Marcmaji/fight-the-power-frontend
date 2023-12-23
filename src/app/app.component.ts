@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { InputManagerService } from './services/input-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'fight-the-power';
+
+  constructor(private _inputManager: InputManagerService){}
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardDown(event: KeyboardEvent) { 
+    this._inputManager.addKey(event.key);
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardUp(event: KeyboardEvent) { 
+    this._inputManager.removeKey(event.key);
+  }
+
+  /* @HostListener('document:mousemove', ['$event'])
+  handleMouseMove(event: MouseEvent) { 
+    console.log(event.clientX, event.clientY);
+  } */
 }
