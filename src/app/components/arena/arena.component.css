@@ -20,6 +20,6 @@
 .arena{
     position: absolute;
     outline: 3px solid black;
-    background-color: rgb(230, 206, 129);
+    background-color: rgb(240, 208, 148);
     z-index: 2;
 }
