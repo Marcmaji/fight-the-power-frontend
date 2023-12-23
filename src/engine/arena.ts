@@ -15,11 +15,11 @@ export class Arena{
     private arenaLeftMostBound: number = window.innerWidth / 2
     private arenaRightMostBound: number; 
 
-    constructor(position: Position, size: Size, mainPlayer: Player){
+    constructor(size: Size, mainPlayer: Player){
         this.arenaRightMostBound = innerWidth / 2 - size.width
         this.arenaLowerBound = innerHeight / 2 - size.height
-        this._position = new Position(ExtendedMath.clampValue(this.arenaRightMostBound + mainPlayer.size.width / 2, -position.x + this.arenaLeftMostBound, this.arenaLeftMostBound - mainPlayer.size.width / 2),
-        ExtendedMath.clampValue(this.arenaLowerBound + mainPlayer.size.width / 2, -position.y + this.arenaUperBound, this.arenaUperBound - mainPlayer.size.width / 2));
+        this._position = new Position(ExtendedMath.clampValue(this.arenaRightMostBound + mainPlayer.size.width / 2, -mainPlayer.position.x + this.arenaLeftMostBound, this.arenaLeftMostBound - mainPlayer.size.width / 2),
+        ExtendedMath.clampValue(this.arenaLowerBound + mainPlayer.size.width / 2, -mainPlayer.position.y + this.arenaUperBound, this.arenaUperBound - mainPlayer.size.width / 2));
         this._size = size;
         this._mainPlayer = mainPlayer
     }
@@ -50,7 +50,8 @@ export class Arena{
         return this._position;
     }
     public set position(v : Position) {
-        this._position = v;
+        this._position = new Position(ExtendedMath.clampValue(this.arenaRightMostBound + this.mainPlayer.size.width / 2, -v.x + this.arenaLeftMostBound, this.arenaLeftMostBound - this.mainPlayer.size.width / 2),
+        ExtendedMath.clampValue(this.arenaLowerBound + this.mainPlayer.size.width / 2, -v.y + this.arenaUperBound, this.arenaUperBound - this.mainPlayer.size.width / 2));;
     }
     
     public get size() : Size {
@@ -65,6 +66,8 @@ export class Arena{
     }
     public set mainPlayer(v : Player) {
         this._mainPlayer = v;
+        this.position = this.mainPlayer.position
+        this.size = this.mainPlayer.size
     }
     
 }

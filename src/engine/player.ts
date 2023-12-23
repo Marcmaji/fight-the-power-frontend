@@ -11,7 +11,7 @@ export class Player{
     private _arenaSize: Size
     private _speed : number;
 
-    constructor(id: string, position: Position, size: Size, arenaSize: Size, speed: number = 2){
+    constructor(id: string, position: Position, size: Size, arenaSize: Size, speed: number = 3){
         this._id = id;
         this._position = new Position(ExtendedMath.clampValue(0, position.x, arenaSize.width),
         ExtendedMath.clampValue(0, position.y, arenaSize.height));
@@ -39,7 +39,6 @@ export class Player{
                     console.warn("Key pressed not considered")
                     break
             }
-            console.log(this.position)
         })
     }
 

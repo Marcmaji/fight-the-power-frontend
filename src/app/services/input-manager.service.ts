@@ -17,7 +17,6 @@ export class InputManagerService {
     if(this.validateInput(key)){
       if (!this.keyPressed.includes(key)){
         if(this.keyPressed.length == 0){
-          console.log("starting interval")
           this.emissionSubscription = interval(10).subscribe(() => this.keyEmitter.emit(this.keyPressed))  
         }
         this.keyPressed.push(key)

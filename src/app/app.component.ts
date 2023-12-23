@@ -13,12 +13,12 @@ export class AppComponent {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardDown(event: KeyboardEvent) { 
-    this._inputManager.addKey(event.key);
+    this._inputManager.addKey(event.key.toLowerCase());
   }
 
   @HostListener('document:keyup', ['$event'])
   handleKeyboardUp(event: KeyboardEvent) { 
-    this._inputManager.removeKey(event.key);
+    this._inputManager.removeKey(event.key.toLowerCase());
   }
 
   /* @HostListener('document:mousemove', ['$event'])
