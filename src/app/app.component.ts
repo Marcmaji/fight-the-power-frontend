@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { InputManagerService } from './services/input-manager.service';
+import { Position } from 'src/engine/utils/position';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +22,8 @@ export class AppComponent {
     this._inputManager.removeKey(event.key.toLowerCase());
   }
 
-  /* @HostListener('document:mousemove', ['$event'])
+  @HostListener('document:mousemove', ['$event'])
   handleMouseMove(event: MouseEvent) { 
-    console.log(event.clientX, event.clientY);
-  } */
+    this._inputManager.generateAngleFromMousePosition(new Position(event.clientX, event.clientY))
+  }
 }

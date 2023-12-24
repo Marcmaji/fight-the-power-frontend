@@ -26,11 +26,15 @@ export class ArenaComponent implements OnInit {
   ngOnInit(): void {
     this.addNewPlayer(new Player('123456', new Position(50, 50), new Size(20, 20), this.arenaSize))
     this.addNewPlayer(new Player('21536', new Position(1200, 450), new Size(20, 20), this.arenaSize))
-    this.addNewPlayer(new Player('1235', new Position(900, 400), new Size(20, 20), this.arenaSize))
-    this.addNewPlayer(new Player('987654', new Position(20, 20), new Size(30, 30), this.arenaSize))
+    this.addNewPlayer(new Player('1235', new Position(900, 400), new Size(50, 20), this.arenaSize))
+    this.addNewPlayer(new Player('987654', new Position(0, 0), new Size(30, 30), this.arenaSize))
     this.selectMainPlayer('1235')
     this._inputManager.keyEmitter.subscribe((keyPressed) => this.arena.moveArena(keyPressed))
     this._inputManager.keyEmitter.subscribe((keypressed) => this.mainPlayer.movePlayer(keypressed))
+    this._inputManager.angleEmitter.subscribe((angle) => {
+      this.mainPlayer.angle = angle
+      this.arena.position = this.mainPlayer.position
+    })
   }
 
   addNewPlayer(player: Player){

@@ -6,34 +6,39 @@ import { Size } from "./utils/size";
 export class Player{
     
     private _id : string;
-    private _position : Position;
+    private _position : Position; // position with arena top left corner as origin
     private _size : Size;
     private _arenaSize: Size
     private _speed : number;
-
-    constructor(id: string, position: Position, size: Size, arenaSize: Size, speed: number = 3){
+    private _angle : number;
+    private _boundingBox : Size;
+    
+    constructor(id: string, position: Position, size: Size, arenaSize: Size, speed: number = 3, angle = 0){
         this._id = id;
-        this._position = new Position(ExtendedMath.clampValue(0, position.x, arenaSize.width),
-        ExtendedMath.clampValue(0, position.y, arenaSize.height));
-        this._size = size;
+        this._size = size
+        this._boundingBox = new Size(Math.abs(this.size.width * Math.cos(angle * Math.PI / 180)) + Math.abs(this.size.height * Math.sin(angle * Math.PI / 180)),
+        Math.abs(this.size.width * Math.sin(angle * Math.PI / 180)) + Math.abs(this.size.height * Math.cos(angle * Math.PI / 180)));
+        this._position = new Position(ExtendedMath.clampValue(this.boundingBox.width / 2, position.x, arenaSize.width - this.boundingBox.width / 2),
+        ExtendedMath.clampValue(this.boundingBox.height / 2, position.y, arenaSize.height - this.boundingBox.height / 2));
         this._arenaSize = arenaSize;
         this._speed = speed;
+        this._angle = angle;
     }
 
     movePlayer(keyPressed: string[]){
         keyPressed.forEach((key) => {
             switch(key){
                 case EnabledKeys.W:
-                    this.position.y = ExtendedMath.clampValue(this.size.height / 2, this.position.y - this.speed, this.arenaSize.height - this.size.height / 2)
+                    this.position.y = ExtendedMath.clampValue(this.boundingBox.height / 2, this.position.y - this.speed, this.arenaSize.height - this.boundingBox.height / 2)
                     break
                 case EnabledKeys.A:
-                    this.position.x = ExtendedMath.clampValue(this.size.width / 2, this.position.x - this.speed, this.arenaSize.width - this.size.width / 2)
+                    this.position.x = ExtendedMath.clampValue(this.boundingBox.width / 2, this.position.x - this.speed, this.arenaSize.width - this.boundingBox.width / 2)
                     break
                 case EnabledKeys.S:
-                    this.position.y = ExtendedMath.clampValue(this.size.height / 2, this.position.y + this.speed, this.arenaSize.height - this.size.height / 2)
+                    this.position.y = ExtendedMath.clampValue(this.boundingBox.height / 2, this.position.y + this.speed, this.arenaSize.height - this.boundingBox.height / 2)
                     break
                 case EnabledKeys.D:
-                    this.position.x = ExtendedMath.clampValue(this.size.width / 2, this.position.x + this.speed, this.arenaSize.width - this.size.width / 2)
+                    this.position.x = ExtendedMath.clampValue(this.boundingBox.width / 2, this.position.x + this.speed, this.arenaSize.width - this.boundingBox.width / 2)
                     break
                 default:
                     console.warn("Key pressed not considered")
@@ -53,7 +58,8 @@ export class Player{
         return this._position;
     }
     public set position(v : Position) {
-        this._position = v;
+        this._position = new Position(ExtendedMath.clampValue(0, v.x, this.arenaSize.width),
+        ExtendedMath.clampValue(0, v.y, this.arenaSize.height));;
     }
     
     public get size() : Size {
@@ -75,5 +81,21 @@ export class Player{
     }
     public set speed(v : number) {
         this._speed = v;
+    }
+
+    public get angle() : number {
+        return this._angle;
+    }
+    public set angle(v : number) {
+        this._angle = v;
+        this._boundingBox = new Size(Math.abs(this.size.width * Math.cos(v * Math.PI / 180)) + Math.abs(this.size.height * Math.sin(v * Math.PI / 180)),
+        Math.abs(this.size.width * Math.sin(v * Math.PI / 180)) + Math.abs(this.size.height * Math.cos(v * Math.PI / 180)));
+    }
+
+    public get boundingBox() : Size {
+        return this._boundingBox;
+    }
+    public set boundingBox(v : Size) {
+        this._boundingBox = v;
     }
 }

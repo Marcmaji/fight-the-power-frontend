@@ -1,6 +1,6 @@
 <div class="stadium">
 
-    <div class="main-player" [ngStyle]="{'top': windowCenter.y + 'px', 'left':  windowCenter.x + 'px', 'width': mainPlayer.size.width + 'px', 'height': mainPlayer.size.height + 'px'}"> </div>
+    <div class="main-player" [ngStyle]="{'top': windowCenter.y + 'px', 'left':  windowCenter.x + 'px', 'width': mainPlayer.size.width + 'px', 'height': mainPlayer.size.height + 'px', 'rotate': mainPlayer.angle + 'deg'}"> </div>
 
     <div class="arena" [ngStyle]="{'top': arena.position.y + 'px', 'left':  arena.position.x + 'px', 'height': arenaSize.height + 'px', 'width': arenaSize.width + 'px'}">
         <app-player *ngFor="let player of playerList" 
