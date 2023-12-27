@@ -1,0 +1,29 @@
+<div class="from-overlay" *ngIf="showForm">
+    <div class="form-container">
+        <div class="form-placeholder">
+            <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+                <div>
+                  <label for="id">
+                    Player Name
+                  </label>
+                  <input id="id" type="text" formControlName="id" required="true" placeholder="Player Name">
+                </div>
+              
+                <div>
+                    <label for="width">Width</label>
+                    <input id="width" type="number" formControlName="width" required="true">
+                </div>
+                <div>
+                    <label for="height">Height</label>
+                    <input id="height" type="number" formControlName="height" required="true">
+
+                </div>
+              
+                <button class="button" type="submit">Purchase</button>
+              
+              </form>
+        </div>
+    </div>
+</div>
+
+<app-arena></app-arena>

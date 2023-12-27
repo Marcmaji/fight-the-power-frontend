@@ -5,6 +5,7 @@ import { Player } from 'src/engine/player';
 import { EnabledKeys } from 'src/engine/utils/enabled-keys';
 import { Position } from 'src/engine/utils/position';
 import { Size } from 'src/engine/utils/size';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-arena',
@@ -13,7 +14,7 @@ import { Size } from 'src/engine/utils/size';
 })
 export class ArenaComponent implements OnInit {
 
-  arenaSize:Size = new Size(1500, 900)
+  arenaSize:Size = new Size(environment.arenaSize.width, environment.arenaSize.height)
 
   windowCenter: Position = new Position(window.innerWidth / 2, window.innerHeight / 2)
 
